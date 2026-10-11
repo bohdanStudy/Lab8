@@ -16,5 +16,25 @@
  * @returns {Show[]}
  */
 export function filterShows(shows, options) {
-  throw new Error('Not implemented');
+  return shows.filter((show) => {
+    if (!options) return true;
+
+    const { query, genre, minRating } = options;
+
+    if (query && !show.name.toLowerCase().includes(query.trim().toLowerCase())) {
+      return false;
+    }
+
+    if (genre && !show.genres.includes(genre)) {
+      return false;
+    }
+
+    if (minRating !== null && minRating !== undefined && minRating !== 0) {
+      if (show.rating === null || show.rating < minRating) {
+        return false;
+      }
+    }
+
+    return true;
+  });
 }
